@@ -6,13 +6,13 @@ export const linkCommentRoute = createTRPCRouter({
   createLinkComment: protectedProcedure
     .input(
       z.object({
-        userId: z.string().cuid(),
         url: z.string().url(),
         comment: z.string(),
       })
     )
     .mutation(({ ctx, input }) => {
-      const { userId, url, comment } = input;
+      const { url, comment } = input;
+      const userId = ctx.session?.user?.id;
       return ctx.prisma.linkComment.create({
         data: {
           user: { connect: { id: userId } },

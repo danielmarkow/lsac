@@ -1,8 +1,6 @@
 import type { FieldValues } from "react-hook-form";
 import { useForm } from "react-hook-form";
 
-import { useSession } from "next-auth/react";
-
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -16,8 +14,6 @@ const schema = z.object({
 });
 
 export default function CreateCommentLink() {
-  const { data: sessionData } = useSession();
-
   type FormValues = {
     url: string;
     comment: string;
@@ -32,10 +28,6 @@ export default function CreateCommentLink() {
     resolver: zodResolver(schema),
   });
 
-  type FormMutationInput = FormValues & {
-    userId: string;
-  };
-
   const createLinkCommentMutation =
     api.linkComment.createLinkComment.useMutation({
       onSuccess: () => void reset(),
@@ -43,8 +35,7 @@ export default function CreateCommentLink() {
     });
 
   const onSubmit = (data: FieldValues) => {
-    const submitData = { ...data, userId: sessionData?.user?.id };
-    createLinkCommentMutation.mutate(submitData as FormMutationInput);
+    createLinkCommentMutation.mutate(data as FormValues);
   };
 
   return (
