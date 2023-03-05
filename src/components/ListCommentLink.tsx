@@ -37,16 +37,20 @@ export default function ListCommentLink() {
             </li>
           ))}
         </ul>
-        <DarkButton
-          onClick={() => {
-            if (hasNextPage && !isFetching) {
-              fetchNextPage();
-            }
-          }}
-          className="mt-2"
-        >
-          Fetch More!
-        </DarkButton>
+        {commentsLinks && flatCommentsLinks.length > 0 ? (
+          <DarkButton
+            onClick={() => {
+              if (hasNextPage && !isFetching) {
+                fetchNextPage();
+              }
+            }}
+            className="mt-2"
+          >
+            Fetch More!
+          </DarkButton>
+        ) : (
+          <p className="text-gray-400">No links and comments yet</p>
+        )}
       </div>
     </>
   );
