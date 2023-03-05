@@ -28,9 +28,14 @@ export default function CreateCommentLink() {
     resolver: zodResolver(schema),
   });
 
+  const utils = api.useContext();
+
   const createLinkCommentMutation =
     api.linkComment.createLinkComment.useMutation({
-      onSuccess: () => void reset(),
+      onSuccess: () => {
+        reset();
+        utils.linkComment.getLinkComment.invalidate();
+      },
       onError: () => void toast.error("error saving link and comment"),
     });
 
