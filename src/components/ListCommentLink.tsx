@@ -41,7 +41,7 @@ export default function ListCommentLink() {
           <DarkButton
             onClick={() => {
               if (hasNextPage && !isFetching) {
-                fetchNextPage();
+                void fetchNextPage();
               }
             }}
             className="mt-2"

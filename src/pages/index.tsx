@@ -1,7 +1,7 @@
 import { type NextPage } from "next";
 import DarkButton from "~/components/common/DarkButton";
 
-import { signIn, signOut, useSession } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import CreateCommentLink from "~/components/CreateCommentLink";
 import ListCommentLink from "~/components/ListCommentLink";
 

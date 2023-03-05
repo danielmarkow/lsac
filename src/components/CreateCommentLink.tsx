@@ -34,7 +34,7 @@ export default function CreateCommentLink() {
     api.linkComment.createLinkComment.useMutation({
       onSuccess: () => {
         reset();
-        utils.linkComment.getLinkComment.invalidate();
+        void utils.linkComment.getLinkComment.invalidate();
       },
       onError: () => void toast.error("error saving link and comment"),
     });
@@ -47,7 +47,7 @@ export default function CreateCommentLink() {
     <>
       <div className="mt-1 border-2 border-dashed border-gray-200 p-1">
         <h2 className="text-lg font-medium text-gray-500">Create</h2>
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={void handleSubmit(onSubmit)}>
           <div className="flex">
             <div className="w-screen">
               <label
