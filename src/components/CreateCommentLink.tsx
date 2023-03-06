@@ -47,7 +47,8 @@ export default function CreateCommentLink() {
     <>
       <div className="mt-1 border-2 border-dashed border-gray-200 p-1">
         <h2 className="text-lg font-medium text-gray-500">Create</h2>
-        <form onSubmit={void handleSubmit(onSubmit)}>
+        {/* eslint-disable-next-line */}
+        <form onSubmit={handleSubmit(onSubmit)}>
           <div className="flex">
             <div className="w-screen">
               <label
