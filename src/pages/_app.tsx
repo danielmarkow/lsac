@@ -20,7 +20,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
           name="link saver and commenter"
           content="your links and comments"
         />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/lsac-favicon.png" />
       </Head>
       <Toaster />
       <div className="ml-5">
