@@ -1,5 +1,6 @@
 import { api } from "~/utils/api";
 import DarkButton from "./common/DarkButton";
+import DropDown from "./common/DropDown";
 
 const LIMIT = 10;
 
@@ -12,7 +13,6 @@ export default function ListCommentLink() {
   } = api.linkComment.getLinkComment.useInfiniteQuery(
     { limit: LIMIT },
     {
-      staleTime: 12000,
       getNextPageParam: (lastPage) => lastPage.nextCursor,
     }
   );
@@ -25,19 +25,23 @@ export default function ListCommentLink() {
       <div className="mt-1 border-2 border-dashed border-gray-200 p-1">
         <ul role="list" className="divide-y divide-gray-200">
           {flatCommentsLinks.map((cl) => (
-            <li
-              key={cl.id}
-              className="relative bg-white py-5 px-4 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 hover:bg-gray-50"
-            >
-              <a href={cl.link} target="_blank">
-                {cl.link}
-              </a>
-              <div className="mt-1">
-                <p className="line-clamp-2 text-sm text-gray-600">
-                  {cl.comment}
-                </p>
+            <div key={cl.id} className="flex justify-between">
+              <div>
+                <li className="relative bg-white py-5 px-4 focus-within:ring-2 focus-within:ring-inset">
+                  <a href={cl.link} target="_blank">
+                    {cl.link}
+                  </a>
+                  <div className="mt-1">
+                    <p className="line-clamp-2 text-sm text-gray-600">
+                      {cl.comment}
+                    </p>
+                  </div>
+                </li>
               </div>
-            </li>
+              <div>
+                <DropDown id={cl.id} />
+              </div>
+            </div>
           ))}
         </ul>
         {commentsLinks && flatCommentsLinks.length > 0 ? (

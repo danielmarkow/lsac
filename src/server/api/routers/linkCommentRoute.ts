@@ -56,4 +56,11 @@ export const linkCommentRoute = createTRPCRouter({
         nextCursor,
       };
     }),
+  deleteLinkComment: protectedProcedure
+    .input(z.object({ id: z.string().cuid() }))
+    .mutation(({ ctx, input }) => {
+      return ctx.prisma.linkComment.delete({
+        where: { id: input.id },
+      });
+    }),
 });
