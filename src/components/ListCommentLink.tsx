@@ -12,6 +12,7 @@ export default function ListCommentLink() {
   } = api.linkComment.getLinkComment.useInfiniteQuery(
     { limit: LIMIT },
     {
+      staleTime: 12000,
       getNextPageParam: (lastPage) => lastPage.nextCursor,
     }
   );
