@@ -49,8 +49,8 @@ export default function CreateCommentLink() {
         <h2 className="text-lg font-medium text-gray-500">Create</h2>
         {/* eslint-disable-next-line */}
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="flex">
-            <div className="w-screen">
+          <div className="flex flex-wrap gap-1">
+            <div className="w-screen md:w-1/3">
               <label
                 htmlFor="link-url"
                 className="mt-1 block text-sm font-medium text-gray-700"
@@ -69,7 +69,7 @@ export default function CreateCommentLink() {
                 </p>
               )}
             </div>
-            <div className="ml-5 w-screen">
+            <div className="w-screen md:w-1/2">
               <label
                 htmlFor="comment"
                 className="block text-sm font-medium leading-6 text-gray-900"
