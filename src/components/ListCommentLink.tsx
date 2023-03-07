@@ -26,7 +26,7 @@ export default function ListCommentLink() {
         <ul role="list" className="divide-y divide-gray-200">
           {flatCommentsLinks.map((cl) => (
             <div key={cl.id} className="flex justify-between">
-              <div className="truncate">
+              <div className="...  truncate">
                 <li className="relative bg-white py-5 px-4 focus-within:ring-2 focus-within:ring-inset">
                   <a href={cl.link} target="_blank">
                     {cl.link}
