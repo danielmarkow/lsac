@@ -1,19 +1,16 @@
 import { type AppType } from "next/app";
 import Head from "next/head";
-import { type Session } from "next-auth";
-import { SessionProvider } from "next-auth/react";
+
 import { Toaster } from "react-hot-toast";
+import { ClerkProvider } from "@clerk/nextjs";
 
 import { api } from "~/utils/api";
 
 import "~/styles/globals.css";
 
-const MyApp: AppType<{ session: Session | null }> = ({
-  Component,
-  pageProps: { session, ...pageProps },
-}) => {
+const MyApp: AppType = ({ Component, pageProps }) => {
   return (
-    <SessionProvider session={session}>
+    <ClerkProvider {...pageProps}>
       <Head>
         <title>LSAC</title>
         <meta
@@ -29,7 +26,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
         </p>
         <Component {...pageProps} />
       </div>
-    </SessionProvider>
+    </ClerkProvider>
   );
 };
 
