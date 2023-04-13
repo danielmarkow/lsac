@@ -12,10 +12,10 @@ export const linkCommentRoute = createTRPCRouter({
     )
     .mutation(({ ctx, input }) => {
       const { url, comment } = input;
-      const userId = ctx.session?.user?.id;
+      const userId = ctx.userId;
       return ctx.prisma.linkComment.create({
         data: {
-          user: { connect: { id: userId } },
+          userId: userId,
           link: url,
           comment,
         },
@@ -30,7 +30,7 @@ export const linkCommentRoute = createTRPCRouter({
     )
     .query(async ({ ctx, input }) => {
       const { limit, cursor } = input;
-      const userId = ctx.session?.user?.id;
+      const userId = ctx.userId;
 
       const linkComments = await ctx.prisma.linkComment.findMany({
         take: limit + 1,
