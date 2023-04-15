@@ -5,8 +5,13 @@ import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import DarkButton from "./common/DarkButton";
+
 import { api } from "~/utils/api";
+import type { RouterOutputs } from "~/utils/api";
+
 import { toast } from "react-hot-toast";
+
+import type { InfiniteData } from "@tanstack/react-query";
 
 const schema = z.object({
   url: z.string().url(),
@@ -30,11 +35,47 @@ export default function CreateCommentLink() {
 
   const utils = api.useContext();
 
+  type LinkComment = {
+    id: string;
+    link: string;
+    comment: string;
+    userId: string;
+    createdAt: Date;
+    updatedAt: Date;
+  };
+
   const createLinkCommentMutation =
     api.linkComment.createLinkComment.useMutation({
-      onSuccess: () => {
+      onSuccess: (newData) => {
         reset();
-        void utils.linkComment.getLinkComment.invalidate();
+        utils.linkComment.getLinkComment.setInfiniteData(
+          { limit: 10 },
+          (oldData) => {
+            console.log("oldData ", JSON.stringify(oldData));
+            // console.log("newData ", JSON.stringify(newData));
+
+            const newRet = {
+              pages: [
+                {
+                  linkComments: [
+                    newData,
+                    ...(oldData?.pages[0]?.linkComments as LinkComment[]),
+                  ],
+                  nextCursor: oldData?.pages[0]?.nextCursor,
+                },
+                ...(oldData?.pages.slice(1) as {
+                  linkComments: LinkComment[];
+                  nextCursor: string | undefined;
+                }[]),
+              ],
+            };
+
+            // console.log("newRet", JSON.stringify(newRet));
+            return newRet as
+              | InfiniteData<RouterOutputs["linkComment"]["getLinkComment"]>
+              | undefined;
+          }
+        );
       },
       onError: () => void toast.error("error saving link and comment"),
     });
