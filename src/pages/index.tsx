@@ -1,6 +1,6 @@
 import { type NextPage } from "next";
 
-import { SignInButton, UserButton, useUser } from "@clerk/nextjs";
+import { SignInButton, useUser } from "@clerk/nextjs";
 
 import CreateCommentLink from "~/components/CreateCommentLink";
 import ListCommentLink from "~/components/ListCommentLink";

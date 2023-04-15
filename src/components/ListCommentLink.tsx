@@ -1,6 +1,7 @@
 import { api } from "~/utils/api";
 import DarkButton from "./common/DarkButton";
 import DropDown from "./common/DropDown";
+import Loading from "./common/Loading";
 
 const LIMIT = 10;
 
@@ -19,6 +20,13 @@ export default function ListCommentLink() {
 
   const flatCommentsLinks =
     commentsLinks?.pages.flatMap((page) => page.linkComments) ?? [];
+
+  if (isFetching)
+    return (
+      <div className="mt-10 flex items-center justify-center">
+        <Loading />
+      </div>
+    );
 
   return (
     <>

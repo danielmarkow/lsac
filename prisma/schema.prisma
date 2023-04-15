@@ -21,6 +21,8 @@ model LinkComment {
     userId    String
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
+
+    @@index([userId])
 }
 
 // Necessary for Next auth
