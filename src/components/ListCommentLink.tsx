@@ -15,6 +15,7 @@ export default function ListCommentLink() {
     { limit: LIMIT },
     {
       getNextPageParam: (lastPage) => lastPage.nextCursor,
+      refetchOnWindowFocus: false,
     }
   );
 

@@ -51,9 +51,6 @@ export default function CreateCommentLink() {
         utils.linkComment.getLinkComment.setInfiniteData(
           { limit: 10 },
           (oldData) => {
-            console.log("oldData ", JSON.stringify(oldData));
-            // console.log("newData ", JSON.stringify(newData));
-
             const newRet = {
               pages: [
                 {
@@ -70,7 +67,6 @@ export default function CreateCommentLink() {
               ],
             };
 
-            // console.log("newRet", JSON.stringify(newRet));
             return newRet as
               | InfiniteData<RouterOutputs["linkComment"]["getLinkComment"]>
               | undefined;
