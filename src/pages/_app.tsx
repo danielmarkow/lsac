@@ -20,10 +20,7 @@ const MyApp: AppType = ({ Component, pageProps }) => {
         <link rel="icon" href="/lsac-favicon.png" />
       </Head>
       <Toaster />
-      <div className="ml-5 mr-5">
-        <p className="ml-1 mt-1 text-gray-300">
-          LSAC - Link Saver and Commenter
-        </p>
+      <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
         <Component {...pageProps} />
       </div>
     </ClerkProvider>

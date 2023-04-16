@@ -26,7 +26,16 @@ const Home: NextPage = () => {
         )}
         {isSignedIn && (
           <div>
-            <DarkButton onClick={() => void signOut()}>Sign out</DarkButton>
+            <div className="mt-1 flex justify-between">
+              <div>
+                <p className="ml-1 mt-1 text-gray-300">
+                  LSAC - Link Saver and Commenter
+                </p>
+              </div>
+              <div>
+                <DarkButton onClick={() => void signOut()}>Sign out</DarkButton>
+              </div>
+            </div>
             <CreateCommentLink />
             <ListCommentLink />
           </div>

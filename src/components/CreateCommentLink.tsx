@@ -13,6 +13,8 @@ import { toast } from "react-hot-toast";
 
 import type { InfiniteData } from "@tanstack/react-query";
 
+import LoadinButton from "./common/LoadingButton";
+
 const schema = z.object({
   url: z.string().url(),
   comment: z.string(),
@@ -117,6 +119,11 @@ export default function CreateCommentLink() {
                 id="comment"
                 className="block w-full rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset sm:py-1.5 sm:text-sm sm:leading-6"
                 rows={4}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" && !e.shiftKey) {
+                    void handleSubmit(onSubmit)();
+                  }
+                }}
                 {...register("comment")}
               />
               {errors && (
@@ -127,7 +134,7 @@ export default function CreateCommentLink() {
             </div>
           </div>
           <DarkButton className="mt-5" type="submit">
-            Submit
+            {createLinkCommentMutation.isLoading ? <LoadinButton /> : "Submit"}
           </DarkButton>
         </form>
       </div>
