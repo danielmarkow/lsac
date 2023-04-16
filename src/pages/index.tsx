@@ -1,6 +1,6 @@
 import { type NextPage } from "next";
 
-import { SignInButton, useUser } from "@clerk/nextjs";
+import { SignInButton, useUser, useClerk } from "@clerk/nextjs";
 
 import CreateCommentLink from "~/components/CreateCommentLink";
 import ListCommentLink from "~/components/ListCommentLink";
@@ -8,6 +8,7 @@ import DarkButton from "~/components/common/DarkButton";
 // import Loading from "~/components/common/Loading";
 
 const Home: NextPage = () => {
+  const { signOut } = useClerk();
   const { isLoaded: userLoaded, isSignedIn } = useUser();
 
   if (!userLoaded) return <div />;
@@ -25,6 +26,7 @@ const Home: NextPage = () => {
         )}
         {isSignedIn && (
           <div>
+            <DarkButton onClick={() => void signOut()}>Sign out</DarkButton>
             <CreateCommentLink />
             <ListCommentLink />
           </div>
