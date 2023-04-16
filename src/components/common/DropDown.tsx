@@ -2,6 +2,8 @@ import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { EllipsisVerticalIcon, TrashIcon } from "@heroicons/react/20/solid";
 import { api } from "~/utils/api";
+import type { RouterOutputs } from "~/utils/api";
+import type { InfiniteData } from "@tanstack/react-query";
 
 const classNames = (...classes: string[]) => {
   return classes.filter(Boolean).join(" ");
@@ -10,7 +12,25 @@ const classNames = (...classes: string[]) => {
 export default function DropDown({ id }: { id: string }) {
   const client = api.useContext();
   const deleteMutation = api.linkComment.deleteLinkComment.useMutation({
-    onSuccess: () => client.linkComment.getLinkComment.invalidate(),
+    onSuccess: (data) =>
+      client.linkComment.getLinkComment.setInfiniteData(
+        { limit: 10 },
+        (oldData) => {
+          const newRet = {
+            pages: oldData?.pages.map((page) => {
+              const newPage = { ...page };
+              newPage.linkComments = newPage.linkComments.filter(
+                (lc) => lc.id !== data.id
+              );
+              return newPage;
+            }),
+          };
+
+          return newRet as
+            | InfiniteData<RouterOutputs["linkComment"]["getLinkComment"]>
+            | undefined;
+        }
+      ),
   });
 
   return (
