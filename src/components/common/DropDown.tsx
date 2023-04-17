@@ -4,6 +4,7 @@ import { EllipsisVerticalIcon, TrashIcon } from "@heroicons/react/20/solid";
 import { api } from "~/utils/api";
 import type { RouterOutputs } from "~/utils/api";
 import type { InfiniteData } from "@tanstack/react-query";
+import LoadinButton from "./LoadingButton";
 
 const classNames = (...classes: string[]) => {
   return classes.filter(Boolean).join(" ");
@@ -11,6 +12,7 @@ const classNames = (...classes: string[]) => {
 
 export default function DropDown({ id }: { id: string }) {
   const client = api.useContext();
+
   const deleteMutation = api.linkComment.deleteLinkComment.useMutation({
     onSuccess: (data) =>
       client.linkComment.getLinkComment.setInfiniteData(
@@ -34,12 +36,16 @@ export default function DropDown({ id }: { id: string }) {
   });
 
   return (
-    <Menu as="div" className="relative mt-1 mr-1 inline-block text-left">
+    <Menu as="div" className="relative mr-1 inline-block text-left">
       <div>
-        <Menu.Button className="flex items-center rounded-full bg-gray-100 text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-50 focus:ring-offset-2 focus:ring-offset-gray-100">
-          <span className="sr-only">Open options</span>
-          <EllipsisVerticalIcon className="h-5 w-5" aria-hidden="true" />
-        </Menu.Button>
+        {deleteMutation.isLoading ? (
+          <LoadinButton />
+        ) : (
+          <Menu.Button className="flex items-center rounded-full bg-gray-100 text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-50 focus:ring-offset-2 focus:ring-offset-gray-100">
+            <span className="sr-only">Open options</span>
+            <EllipsisVerticalIcon className="h-5 w-5" aria-hidden="true" />
+          </Menu.Button>
+        )}
       </div>
 
       <Transition

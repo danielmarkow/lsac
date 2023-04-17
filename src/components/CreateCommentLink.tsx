@@ -84,7 +84,7 @@ export default function CreateCommentLink() {
 
   return (
     <>
-      <div className="mt-1 rounded-lg border-2 border-gray-300 p-1 shadow-sm">
+      <div className="mt-1 rounded-lg border border-gray-300 p-1 shadow-sm">
         <h2 className="text-lg font-medium text-gray-500">Create</h2>
         {/* eslint-disable-next-line */}
         <form onSubmit={handleSubmit(onSubmit)}>
