@@ -7,6 +7,7 @@ import LoadingButton from "./common/LoadingButton";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import updateLocal from "dayjs/plugin/updateLocale";
+import Loading from "./common/Loading";
 
 dayjs.extend(relativeTime);
 dayjs.extend(updateLocal);
@@ -37,6 +38,7 @@ export default function ListCommentLink() {
     hasNextPage,
     fetchNextPage,
     isFetching,
+    isInitialLoading,
   } = api.linkComment.getLinkComment.useInfiniteQuery(
     { limit: LIMIT },
     {
@@ -50,7 +52,7 @@ export default function ListCommentLink() {
 
   return (
     <>
-      <div className="mt-1 rounded-lg border border-gray-300 p-1 shadow-sm">
+      <div className="mt-1 mb-1 rounded-lg border border-gray-300 p-1 shadow-sm">
         <ul role="list" className="divide-y divide-gray-200">
           {flatCommentsLinks.map((cl) => (
             <li
@@ -111,45 +113,8 @@ export default function ListCommentLink() {
             {!isFetching ? "Fetch More!" : <LoadingButton />}
           </DarkButton>
         )}
+        {isInitialLoading && <Loading />}
       </div>
-      {/* <div className="mt-1 rounded-lg border-2 border-gray-300 p-1 shadow-sm">
-        <ul role="list" className="divide-y divide-gray-200">
-          {flatCommentsLinks.map((cl) => (
-            <div key={cl.id} className="flex justify-between">
-              <div className="truncate">
-                <li className="relative bg-white py-5 px-4 focus-within:ring-2 focus-within:ring-inset">
-                  <a href={cl.link} target="_blank">
-                    {cl.link}
-                  </a>
-                  <div className="mt-1">
-                    <p className="line-clamp-2 text-sm text-gray-600">
-                      {cl.comment}
-                    </p>
-                  </div>
-                </li>
-              </div>
-              <div>
-                <DropDown id={cl.id} />
-              </div>
-            </div>
-          ))}
-        </ul>
-        {commentsLinks && flatCommentsLinks.length === 0 && (
-          <p className="text-gray-400">No links and comments yet</p>
-        )}
-      </div>
-      {commentsLinks && flatCommentsLinks.length > 0 && (
-        <DarkButton
-          onClick={() => {
-            if (hasNextPage && !isFetching) {
-              void fetchNextPage();
-            }
-          }}
-          className="mt-2 mb-2"
-        >
-          {!isFetching ? "Fetch More!" : <LoadingButton />}
-        </DarkButton>
-      )} */}
     </>
   );
 }
