@@ -84,12 +84,12 @@ export default function CreateCommentLink() {
 
   return (
     <>
-      <div className="mt-1 border-2 border-dashed border-gray-200 p-1">
+      <div className="mt-1 rounded-lg border-2 border-gray-300 p-1 shadow-sm">
         <h2 className="text-lg font-medium text-gray-500">Create</h2>
         {/* eslint-disable-next-line */}
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="flex flex-wrap gap-1">
-            <div className="w-screen md:w-1/3">
+          <div>
+            <div>
               <label
                 htmlFor="link-url"
                 className="mt-1 block text-sm font-medium text-gray-700"
@@ -108,7 +108,7 @@ export default function CreateCommentLink() {
                 </p>
               )}
             </div>
-            <div className="w-screen md:w-1/2">
+            <div className="">
               <label
                 htmlFor="comment"
                 className="block text-sm font-medium leading-6 text-gray-900"
@@ -121,6 +121,7 @@ export default function CreateCommentLink() {
                 rows={4}
                 onKeyDown={(e) => {
                   if (e.key === "Enter" && !e.shiftKey) {
+                    e.preventDefault();
                     void handleSubmit(onSubmit)();
                   }
                 }}
