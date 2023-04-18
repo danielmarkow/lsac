@@ -1,3 +1,5 @@
+import type { Dispatch, SetStateAction } from "react";
+
 import Link from "next/link";
 import { api } from "~/utils/api";
 import DarkButton from "./common/DarkButton";
@@ -32,7 +34,13 @@ dayjs.updateLocale("en", {
 
 const LIMIT = 10;
 
-export default function ListCommentLink() {
+export default function ListCommentLink({
+  setModalOpen,
+  setModalLinkId,
+}: {
+  setModalOpen: Dispatch<SetStateAction<boolean>>;
+  setModalLinkId: Dispatch<SetStateAction<string>>;
+}) {
   const {
     data: commentsLinks,
     hasNextPage,
@@ -79,7 +87,12 @@ export default function ListCommentLink() {
                 >
                   {dayjs(cl.createdAt).fromNow()}
                 </time>
-                <DropDown id={cl.id} link={cl.link} />
+                <DropDown
+                  id={cl.id}
+                  link={cl.link}
+                  setModalOpen={setModalOpen}
+                  setModalLinkId={setModalLinkId}
+                />
               </div>
               <div className="mt-1">
                 <p className="line-clamp-2 text-sm text-gray-600">

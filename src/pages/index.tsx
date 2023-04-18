@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { type NextPage } from "next";
 
 import { SignInButton, useUser, useClerk } from "@clerk/nextjs";
@@ -5,11 +6,14 @@ import { SignInButton, useUser, useClerk } from "@clerk/nextjs";
 import CreateCommentLink from "~/components/CreateCommentLink";
 import ListCommentLink from "~/components/ListCommentLink";
 import DarkButton from "~/components/common/DarkButton";
-// import Loading from "~/components/common/Loading";
+import LinkDeletionModal from "~/components/LinkDeletionModal";
 
 const Home: NextPage = () => {
   const { signOut } = useClerk();
   const { isLoaded: userLoaded, isSignedIn } = useUser();
+
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const [modalLinkId, setModalLinkId] = useState<string>("");
 
   if (!userLoaded) return <div />;
 
@@ -37,7 +41,16 @@ const Home: NextPage = () => {
               </div>
             </div>
             <CreateCommentLink />
-            <ListCommentLink />
+            <ListCommentLink
+              setModalOpen={setModalOpen}
+              setModalLinkId={setModalLinkId}
+            />
+            <LinkDeletionModal
+              open={modalOpen}
+              id={modalLinkId}
+              setOpen={setModalOpen}
+              setId={setModalLinkId}
+            />
           </div>
         )}
       </main>

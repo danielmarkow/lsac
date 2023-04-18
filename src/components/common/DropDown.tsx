@@ -1,59 +1,40 @@
 import { Fragment } from "react";
+import type { Dispatch, SetStateAction } from "react";
+
 import { Menu, Transition } from "@headlessui/react";
 import {
   EllipsisVerticalIcon,
   TrashIcon,
   ShareIcon,
 } from "@heroicons/react/20/solid";
-import type { InfiniteData } from "@tanstack/react-query";
+
 import { toast } from "react-hot-toast";
-import { api } from "~/utils/api";
-import type { RouterOutputs } from "~/utils/api";
-import LoadinButton from "./LoadingButton";
 
 const classNames = (...classes: string[]) => {
   return classes.filter(Boolean).join(" ");
 };
 
-export default function DropDown({ id, link }: { id: string; link: string }) {
-  const client = api.useContext();
-
-  const deleteMutation = api.linkComment.deleteLinkComment.useMutation({
-    onSuccess: (data) =>
-      client.linkComment.getLinkComment.setInfiniteData(
-        { limit: 10 },
-        (oldData) => {
-          const newRet = {
-            pages: oldData?.pages.map((page) => {
-              const newPage = { ...page };
-              newPage.linkComments = newPage.linkComments.filter(
-                (lc) => lc.id !== data.id
-              );
-              return newPage;
-            }),
-          };
-
-          return newRet as
-            | InfiniteData<RouterOutputs["linkComment"]["getLinkComment"]>
-            | undefined;
-        }
-      ),
-  });
-
+export default function DropDown({
+  id,
+  link,
+  setModalOpen,
+  setModalLinkId,
+}: {
+  id: string;
+  link: string;
+  setModalOpen: Dispatch<SetStateAction<boolean>>;
+  setModalLinkId: Dispatch<SetStateAction<string>>;
+}) {
   return (
     <Menu as="div" className="relative mr-1 inline-block text-left">
       <div>
-        {deleteMutation.isLoading ? (
-          <LoadinButton />
-        ) : (
-          <Menu.Button className="flex items-center rounded-full bg-gray-100 text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-50 focus:ring-offset-2 focus:ring-offset-gray-100">
-            <span className="sr-only">Open options</span>
-            <EllipsisVerticalIcon
-              className="h-6 w-6 sm:h-5 sm:w-5"
-              aria-hidden="true"
-            />
-          </Menu.Button>
-        )}
+        <Menu.Button className="flex items-center rounded-full bg-gray-100 text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-50 focus:ring-offset-2 focus:ring-offset-gray-100">
+          <span className="sr-only">Open options</span>
+          <EllipsisVerticalIcon
+            className="h-6 w-6 sm:h-5 sm:w-5"
+            aria-hidden="true"
+          />
+        </Menu.Button>
       </div>
 
       <Transition
@@ -93,7 +74,10 @@ export default function DropDown({ id, link }: { id: string; link: string }) {
             <Menu.Item>
               {({ active }) => (
                 <span
-                  onClick={() => void deleteMutation.mutate({ id })}
+                  onClick={() => {
+                    setModalOpen(true);
+                    setModalLinkId(id);
+                  }}
                   className={classNames(
                     active ? "bg-gray-100 text-gray-900" : "text-gray-700",
                     "block cursor-pointer px-4 py-2 text-sm"
