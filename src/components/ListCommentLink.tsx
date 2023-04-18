@@ -79,7 +79,7 @@ export default function ListCommentLink() {
                 >
                   {dayjs(cl.createdAt).fromNow()}
                 </time>
-                <DropDown id={cl.id} />
+                <DropDown id={cl.id} link={cl.link} />
               </div>
               <div className="mt-1">
                 <p className="line-clamp-2 text-sm text-gray-600">
