@@ -66,7 +66,7 @@ export default function ListCommentLink() {
                     target="_blank"
                     className="block focus:outline-none"
                   >
-                    <span className="absolute inset-0" aria-hidden="true" />
+                    <span className="absolute" aria-hidden="true" />
                     <p className="truncate text-sm font-medium text-gray-900">
                       {cl.link}
                     </p>
