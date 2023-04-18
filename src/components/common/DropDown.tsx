@@ -48,7 +48,10 @@ export default function DropDown({ id, link }: { id: string; link: string }) {
         ) : (
           <Menu.Button className="flex items-center rounded-full bg-gray-100 text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-50 focus:ring-offset-2 focus:ring-offset-gray-100">
             <span className="sr-only">Open options</span>
-            <EllipsisVerticalIcon className="h-5 w-5" aria-hidden="true" />
+            <EllipsisVerticalIcon
+              className="h-6 w-6 sm:h-5 sm:w-5"
+              aria-hidden="true"
+            />
           </Menu.Button>
         )}
       </div>
